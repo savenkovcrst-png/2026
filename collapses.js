@@ -1,0 +1,1 @@
+const collapsesTree=[{stage:'Обвалы',description:'Стабилизация ствола',fishing:'Метчик'}];
