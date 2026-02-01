@@ -1,4 +1,57 @@
-body{font-family:Arial;margin:30px;background:#f4f6f9}
-#result{margin-top:12px}
-.node{background:#fff;padding:10px;margin:10px 0;border-left:5px solid #1f4e79}
-button{margin-left:10px;padding:6px 10px}
+body { font-family: Arial, sans-serif; margin: 24px; background: #f5f7fb; color:#111; }
+h2 { margin: 0 0 6px; }
+.hint { margin: 0 0 18px; color:#444; }
+
+.grid { display: grid; grid-template-columns: 420px 1fr; gap: 16px; align-items: start; }
+@media (max-width: 1050px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 14px 14px 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+label { display:block; margin-top: 10px; font-weight: 600; font-size: 13px; }
+select, input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 6px;
+  border: 1px solid #d7dbe7;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #fff;
+}
+
+button {
+  margin-top: 14px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 12px;
+  background: #1f4e79;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+button:hover { background: #183f62; }
+
+.summary {
+  margin-top: 12px;
+  background: #f3f6ff;
+  border: 1px solid #dfe7ff;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #223;
+}
+
+#diagramWrap {
+  overflow: auto;
+  border: 1px solid #edf0f6;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fbfcff;
+}
+
+.hint2 { margin: 10px 0 0; color:#555; font-size: 12px; }
