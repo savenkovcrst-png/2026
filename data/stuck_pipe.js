@@ -1,1 +1,0 @@
-const stuckPipeTree=[{stage:'Прихваты',description:'Освобождение колонны стандартными методами',fishing:'Ясс, метчик'}];

@@ -1,1 +1,0 @@
-const toolFailureTree=[{stage:'Разрушение инструмента',description:'Подъем и замена',fishing:'Не требуется'}];

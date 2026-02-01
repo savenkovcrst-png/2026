@@ -1,1 +1,0 @@
-const circulationLossTree=[{stage:'Потеря циркуляции',description:'Тампонаж и стабилизация',fishing:'Не требуется'}];
