@@ -1,0 +1,1 @@
+const pipeFailureTree=[{stage:'Обрыв колонны',description:'Ловильные работы',fishing:'Метчик, колокол'}];
