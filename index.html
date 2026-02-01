@@ -1,53 +1,89 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Экспертная система аварий при бурении</title>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css" />
+
+  <!-- Mermaid (блок-схемы прямо в браузере) -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "strict",
+      theme: "default"
+    });
+  </script>
 </head>
 <body>
-  <h2>Экспертная система по авариям и осложнениям при бурении</h2>
+  <h2>Экспертная система: решения по осложнениям</h2>
+  <p class="hint">
+    Введите параметры → система предложит планы решений и построит блок-схему с ветками “удачно/неудачно”.
+  </p>
 
-  <label>Выберите тип аварии/осложнения:</label><br>
-  <select id="accident">
-    <option value="stuck_pipe">Прихваты</option>
-    <option value="pipe_failure">Обрывы колонны</option>
-    <option value="circulation_loss">Потери циркуляции</option>
-    <option value="kicks">ГНВП</option>
-    <option value="collapses">Обвалы</option>
-    <option value="motors">Аварии ДЗД</option>
-    <option value="tool_failure">Разрушение инструмента</option>
-  </select>
+  <div class="grid">
+    <div class="card">
+      <h3>Условия</h3>
 
-  <button id="btn">Показать решения</button>
+      <label>Положение КНБК в стволе</label>
+      <select id="position">
+        <option value="on_bottom">На забое</option>
+        <option value="above_bottom">Над забоем (10–50 м)</option>
+        <option value="in_trouble_zone">В интервале осложнения</option>
+        <option value="below_trouble_zone">Ниже интервала осложнения</option>
+      </select>
 
-  <p id="status" style="color:#555"></p>
-  <div id="result"></div>
+      <label>Тип бурового раствора</label>
+      <select id="mudType">
+        <option value="wbm">Водный (WBM)</option>
+        <option value="obm">Нефтяной (OBM)</option>
+        <option value="sbm">Синтетический (SBM)</option>
+        <option value="polymer">Полимерный</option>
+      </select>
 
-  <!-- Данные (важно: порядок до logic.js) -->
-  <script src="./data/stuck_pipe.js"></script>
-  <script src="./data/pipe_failure.js"></script>
-  <script src="./data/circulation_loss.js"></script>
-  <script src="./data/kicks.js"></script>
-  <script src="./data/collapses.js"></script>
-  <script src="./data/motors.js"></script>
-  <script src="./data/tool_failure.js"></script>
+      <label>Плотность, г/см³</label>
+      <input id="mudDensity" type="number" step="0.01" value="1.20" />
 
-  <!-- Логика -->
-  <script src="./logic.js"></script>
+      <label>Вязкость (Марш), сек</label>
+      <input id="mudViscosity" type="number" step="1" value="45" />
 
-  <script>
-    // Привязка кнопки после загрузки
-    document.getElementById('btn').addEventListener('click', () => {
-      if (typeof solve !== 'function') {
-        document.getElementById('status').textContent =
-          'Ошибка: не загружен logic.js или есть ошибка в JS. Откройте F12 → Console.';
-        return;
-      }
-      solve();
-    });
-    document.getElementById('status').textContent = 'Готово. Выберите тип и нажмите «Показать решения».';
-  </script>
+      <label>Водоотдача, см³</label>
+      <input id="fluidLoss" type="number" step="0.1" value="8" />
+
+      <label>Тип КНБК</label>
+      <select id="bhaType">
+        <option value="stabilized">Стабилизированная</option>
+        <option value="motor">С забойным двигателем</option>
+        <option value="pendulum">Маятниковая</option>
+        <option value="rss">РСС (Rotary Steerable)</option>
+      </select>
+
+      <label>Диаметр бурильного инструмента, мм</label>
+      <input id="bitDiameter" type="number" step="1" value="127" />
+
+      <label>Вид осложнения</label>
+      <select id="incident">
+        <option value="stuck_pipe">Прихват бурильной колонны</option>
+        <!-- расширишь дальше: обрыв, потери, ГНВП и т.п. -->
+      </select>
+
+      <button id="buildBtn">Построить варианты</button>
+
+      <div id="summary" class="summary"></div>
+    </div>
+
+    <div class="card">
+      <h3>Блок-схема</h3>
+      <div id="diagramWrap">
+        <div id="diagram" class="mermaid"></div>
+      </div>
+      <p class="hint2">
+        Цвет шага = оценка эффективности. Ветка “✅” — путь при успехе, “❌” — при неуспехе.
+      </p>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
 </body>
 </html>
