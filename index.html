@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Экспертная система аварий при бурении</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <h2>Экспертная система по авариям и осложнениям при бурении</h2>
+
+  <label>Выберите тип аварии/осложнения:</label><br>
+  <select id="accident">
+    <option value="stuck_pipe">Прихваты</option>
+    <option value="pipe_failure">Обрывы колонны</option>
+    <option value="circulation_loss">Потери циркуляции</option>
+    <option value="kicks">ГНВП</option>
+    <option value="collapses">Обвалы</option>
+    <option value="motors">Аварии ДЗД</option>
+    <option value="tool_failure">Разрушение инструмента</option>
+  </select>
+
+  <button id="btn">Показать решения</button>
+
+  <p id="status" style="color:#555"></p>
+  <div id="result"></div>
+
+  <!-- Данные (важно: порядок до logic.js) -->
+  <script src="./data/stuck_pipe.js"></script>
+  <script src="./data/pipe_failure.js"></script>
+  <script src="./data/circulation_loss.js"></script>
+  <script src="./data/kicks.js"></script>
+  <script src="./data/collapses.js"></script>
+  <script src="./data/motors.js"></script>
+  <script src="./data/tool_failure.js"></script>
+
+  <!-- Логика -->
+  <script src="./logic.js"></script>
+
+  <script>
+    // Привязка кнопки после загрузки
+    document.getElementById('btn').addEventListener('click', () => {
+      if (typeof solve !== 'function') {
+        document.getElementById('status').textContent =
+          'Ошибка: не загружен logic.js или есть ошибка в JS. Откройте F12 → Console.';
+        return;
+      }
+      solve();
+    });
+    document.getElementById('status').textContent = 'Готово. Выберите тип и нажмите «Показать решения».';
+  </script>
+</body>
+</html>
